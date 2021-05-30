@@ -24,12 +24,27 @@ function generateMenu() {
 
     //loop genom h och lägga ruprikerna under Recept forutom den sista h4 elementet som inehåller inte recept
     var arrayH = [];
-    for (var i = 0; i < h.length - 1; i++){
+    for (var i = 0; i < h.length-1; i++){
         $(h[i]).attr('id', i);
         //Man kan ochså använda settAttribute
         //h[i].setAttribute('id',i);
-        ulEl.append("<li><a href = 'index.html#" + i + "'>" + h[i].textContent + "</a>" + '</li>');
-        
+        stars = '<div class = "stars"><a>⭐</a><a>⭐</a><a>⭐</a><a>⭐</a><a>⭐</a></div>';
+        $('.stars a').css({'opacity':'50%', 'cursor': 'pointer', 'font-size': '0.8em'});
+        $('.stars a').hover(function(){
+            $(this).animate({'opacity': '50%'})
+            $(this).nextAll().animate({'opacity': '50%'})
+            $(this).prevAll().animate({'opacity': '100%'}, 'slow')
+            $(this).animate({'opacity': '100%'}, 'slow')
+
+        });
+
+        ulEl.append("<li><a href = 'index.html#" + i + "'>" + h[i].textContent + "</a>" + stars + '</li>');
+        /*
+        document.getElementsAll('.stars a').Each(function(a){
+            a.addEventListener('click', 
+            console.log(indexOf(a)))
+        })
+        */
 
     };    
   
@@ -73,7 +88,6 @@ $("#receptmeny ul li").each(function(){
         
     }
 
-    
     
 }());
 
