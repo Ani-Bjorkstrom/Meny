@@ -5,6 +5,7 @@ var arrayH = [];
 var ulEl = $("<ul/>");
 var liEL
 var cache = [];
+var starValue
 
 $(document).ready(generateMenu);
 
@@ -46,7 +47,13 @@ function generateMenu() {
         $(this).nextAll().animate({'opacity': '50%'})
         $(this).animate({'opacity': '100%'}, 'slow')
         $(this).prevAll().animate({'opacity': '100%'}, 'slow')
-        console.log(this.id);
+        /*
+        if (window.localStorage){
+            localStorage.setItem()
+        }
+        */
+        starValue = this.id;
+        console.log(this.parentNode.previousSibling.textContent);
         console.log(document.querySelectorAll(".stars a"));
 
     });
