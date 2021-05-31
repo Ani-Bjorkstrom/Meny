@@ -28,16 +28,7 @@ function generateMenu() {
         $(h[i]).attr('id', i);
         //Man kan ochså använda settAttribute
         //h[i].setAttribute('id',i);
-        stars = '<div class = "stars"><a>⭐</a><a>⭐</a><a>⭐</a><a>⭐</a><a>⭐</a></div>';
-        $('.stars a').css({'opacity':'50%', 'cursor': 'pointer', 'font-size': '0.8em'});
-        $('.stars a').hover(function(){
-            $(this).animate({'opacity': '50%'})
-            $(this).nextAll().animate({'opacity': '50%'})
-            $(this).prevAll().animate({'opacity': '100%'}, 'slow')
-            $(this).animate({'opacity': '100%'}, 'slow')
-
-        });
-
+        var stars = '<div class = "stars"><a id = "1">⭐</a><a id = "2">⭐</a><a id = "3">⭐</a><a id = "4">⭐</a><a id = "5">⭐</a></div>';
         ulEl.append("<li><a href = 'index.html#" + i + "'>" + h[i].textContent + "</a>" + stars + '</li>');
         /*
         document.getElementsAll('.stars a').Each(function(a){
@@ -47,6 +38,18 @@ function generateMenu() {
         */
 
     };    
+
+    
+    $('.stars a').css({'opacity':'50%', 'cursor': 'pointer', 'font-size': '0.8em'});
+    $('.stars a').on("click",function(){
+        //$(this).animate({'opacity': '50%'})
+        $(this).nextAll().animate({'opacity': '50%'})
+        $(this).animate({'opacity': '100%'}, 'slow')
+        $(this).prevAll().animate({'opacity': '100%'}, 'slow')
+        console.log(this.id);
+        console.log(document.querySelectorAll(".stars a"));
+
+    });
   
 /*
 liEL = $("#receptmeny ul li"); 
