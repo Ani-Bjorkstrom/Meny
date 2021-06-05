@@ -1,118 +1,94 @@
+//Last updated 5 Jun 2021
 //Creates input elements and saves it in variable search
 var search = document.createElement("input");
 //Adds id attribute to the search variable
 search.setAttribute('id', 'searchVal');
-//Creates jquery collection that involves all h4 elements
-var h = $("h4");
-//Create and empathy array calles arrayH
-var arrayH = [];
-//Creates ul element and saves it in ulEl variable
-var ulEl = $("<ul/>");
+//Creates jquery collection object that involves all $h4 elements
+var $h = $("h4");
+//Creates ul jquery collection object and saves it in $ulEl variable
+var $ulEl = $("<ul/>");
 //Defines Liel global variable
 var liEL
-//Create 'cache' array
+//Creates 'cache' array
 var cache = [];
-//Defines the star value
+//Defines starValue global variable
 var starValue
+//Can be used to clear the rating
 //localStorage.clear();
 
+//generateManu runs after document is loaded
 $(document).ready(generateMenu);
 
 function generateMenu() {
 
-    
+    //Styles input box
     $(search).css({"border-color": "coral", "margin-top": "1em", "margin-bottom": "1em", "border-radius": "5px"});
+    //Appends inout box to the div element
     $("div#receptmeny").append(search);
     
-    //skapa en ul element
+
+    //Saves the jquery object in the variable called $meny
+    var $meny = $("#receptmeny");
+    //Appends the $ulEl to the $meny
+    $meny.append($ulEl);
+
     
-    //spara elemented med id #receptmeny i variabeln meny
-    var meny = $("#receptmeny");
-    //lägg till ul elementet i variabeln meny
-    meny.append(ulEl);
-    //skapa en array som involverar alla h4 elementen
-
-    //loop genom h och lägga ruprikerna under Recept forutom den sista h4 elementet som inehåller inte recept
+    //Create and empty array called arrayH
     var arrayH = [];
-    for (var i = 0; i < h.length-1; i++){
-        $(h[i]).attr('id', i);
-        //Man kan ochså använda settAttribute
-        //h[i].setAttribute('id',i);
-        var text = h[i].textContent;
-        //console.log(text.replace(/\s/g, "").replace(/,/g, ''));
-        var stars = '<div class = "stars" id ='+text.replace(/\s/g, "").replace(/,/g, '')+'><a id = "1">⭐</a><a id = "2">⭐</a><a id = "3">⭐</a><a id = "4">⭐</a><a id = "5">⭐</a></div>';
-        //console.log($('.stars'));
-        ulEl.append("<li><a href = 'index.html#" + i + "'>" + text + "</a>" + stars + '</li>');
-        //Check if rating is used for all elements
-        //console.log($('#' + text));
-        
+    //loop in the $h
+    for (var i = 0; i < $h.length-1; i++){
+        //Adds id element and value
+        $($h[i]).attr('id', i);
+        //Saves the text content in every title in the variable text
+        var text = $h[i].textContent;
+        //Takes out the spaces and commas from the titles
+        var title = text.replace(/\s/g, "").replace(/,/g, '')
+        //saves the starts, class and id attributes in the variable star
+        var stars = '<div class = "stars" id ='+ title +'><a id = "1">⭐</a><a id = "2">⭐</a><a id = "3">⭐</a><a id = "4">⭐</a><a id = "5">⭐</a></div>';
+        //appends titles in li a elements and appends those to $ulEl
+        $ulEl.append("<li><a href = 'index.html#" + i + "'>" + text + "</a>" + stars + '</li>');
+        //Creates a pointer on a elements
+        $('#' + title + ' a').css({'cursor':'pointer', 'font-size': '0.8em'});
+        //if rating is not given all the stars get 50% opacity
         if(!(localStorage.getItem(text))){
-            console.log(localStorage.getItem(text));
-            console.log($('#' + text.replace(/\s/g, "")));
-            $('#' + text.replace(/\s/g, "").replace(/,/g, '') + ' a').css({'opacity':'50%', 'cursor': 'pointer'});
+
+            $('#' + title + ' a').css({'opacity':'50%'});
         }
         
+        //if rating is given only the stars next to the click star get opacity level of 50% 
         else {
-            //console.log(text);
-            
-           //code doesn't work
-           ($('#' + text.replace(/\s/g, "").replace(/,/g, '') + ' #' + localStorage.getItem(text)))
-           .nextAll().css({'opacity': '50%', 'cursor': 'pointer'});
 
-           /*
-           ($('#' + text.replace(/\s/g, "") + '#' + localStorage.getItem(text))).nextAll().animate({'opacity': '50%'});
-           ($('#' + text.replace(/\s/g, "") + '#' + localStorage.getItem(text))).animate({'opacity': '100%'}, 'slow');
-           ($('#' + text.replace(/\s/g, "") + '#' + localStorage.getItem(text))).prevAll().animate({'opacity': '100%'}, 'slow');
-            //$('#' + text.replace(/\s/g, "")).css({'opacity':'50%', 'cursor': 'pointer', 'font-size': '1em'});
-            */
+           ($('#' + title + ' #' + localStorage.getItem(text)))
+           .nextAll().css({'opacity': '50%'});
         }
-        
-        
-        //console.log(localStorage.getItem(text));
-        $('a:not([id])');
-
 
     };    
 
-    
-    
+    //Creates a click event on stars
     $('.stars a').on("click",function(){
-        console.log($(this.parentNode));
-        console.log($(this));
-        //$(this.parentNode).animate({'opacity':'100%', 'cursor': 'pointer'}, 'fast');
-        
-        //$('.stars a').css({'opacity':'100%', 'cursor': 'pointer', 'font-size': '0.8em'});
+
+        //stars next to click star get opacity of 50%
         $(this).nextAll().animate({'opacity': '50%'})
-        //Does not reset the value
+        //Clicked star gets opacity of 100%
         $(this).animate({'opacity': '100%'}, 'slow')
-        //Does not reset the value
+        //all the stars previous to the clicked star get opacity of 100%
         $(this).prevAll().animate({'opacity': '100%'}, 'slow')
-        //$(this.parentNode).css({'opacity':'unset', 'cursor': 'pointer'});
-        /*
-        if (window.localStorage){
-            localStorage.setItem()
-        }
-        */
+        //Saves title of the clicked element in the variable called menyItem
         var menyItem = this.parentNode.previousSibling.textContent
-        //console.log(menyItem);
-        //star is a global variable
+        //Saves clicked star's id in starValue
         starValue = this.id;
+        //Saves menyItem and StarValue in JS's localStorage object
         localStorage.setItem(menyItem, starValue);
-        //console.log(localStorage.getItem('Potatismos'));
-        //console.log(starValue);
-        //console.log(this.parentNode.previousSibling.textContent);
-        //console.log(document.querySelectorAll(".stars a"));
+
 
     });
-  
-/*
-liEL = $("#receptmeny ul li"); 
-console.log($("#receptmeny ul li"));  
-*/
+//Saves value in the search box in the variable called inputVal  
 var inputVal = $("#searchVal");
     
-//console.log($("#receptmeny ul li"));
+//Apply ananymous function on each #receptmeny ul li element
 $("#receptmeny ul li").each(function(){
+    //creates objects for all li element where element key gets value of li and text key gets value of li's first child
+    //all the objects are psued into catche array
     cache.push({
         element: this,
         text: this.firstElementChild.innerHTML.trim().toLowerCase()
@@ -123,38 +99,42 @@ $("#receptmeny ul li").each(function(){
 
 }
 
+//IIFE immediately invoked function expression calls itself 
 (function(){
-    //console.log(cache);
+
+    //defines filter function
     function filter(){
+        //Saves the clicked elements value in query variable
         var query = this.value.trim().toLowerCase();
+        //Runs function below on each object in cache array
         cache.forEach(function(li){
+            //Creates index variable and gives it value of 0
             var index = 0;
+            //If search value is entered (query evaluayes down to true) 
+            //Function checks if the query matches the text and saves 0 in index,
+            //If it doesn't match index equals to -1 
             if (query) {
                 index = li.text.indexOf(query);
             }
-
+            //if the query (search value) matches the text (input value) li element is shown otherwise it's hidden 
             li.element.style.display = index === -1 ? 'none' : '';
         });  
     }
-    
+    //If input is entered in search and 
     if ('oninput' in search){
+        //when input value changes the filter funtions is called
         $(search).on('input', filter);
         
+        //Calls the filter function when keyboard is relaesed 
     } else {
         $(search).on('keyup', filter);
         
     }
+   
 
     
 }());
 
-/*
-ids  for the list strar elemet are not correct, only the first words is included in the id value
-check if the element can be choosen in jquery when a variable is used as a selector id - done
-check if value of a element can be chosen as a jquery seletor - no nessesry
-short out how stars should look when the rating is give to the stars
-
-*/
 
 
 
