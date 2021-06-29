@@ -1,22 +1,29 @@
+
+//check if { Component } is necessary
+
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, TextInput, FlatList} from 'react-native';
-import * as appJson from './app.json';
+import { View, Text, Image, ScrollView } from 'react-native';
+import * as appJson from './data.json';
 import FindMe from './FindMe';
 let cities = appJson.cities;
 
 let myLat = 10;
 let myLon = 10;
-console.log(cities);
+
+
+
+
 const EpCities = (props) => {
     return(
-      cities.map((city) => (
-        <Text className="city">{city.name} - {city.lat-myLat}/{city.lon-myLon}</Text>
+      cities.map((obj) => (
+        <Text key={obj.name}>{obj.name} - {obj.lat-myLat}/{obj.lon-myLon}</Text>
      ))
     )
 }
 export default class App extends Component {
-
+  
 render(){
+  
   return (
 
   <ScrollView>
@@ -41,10 +48,11 @@ render(){
         source={require('./assets/search.png')}
         style={{ width: 50, height: 50, alignSelf: 'center', marginTop: 20 }}
       />
-    <FindMe />  
+    <FindMe  />
     <EpCities name = {cities.name} 
-      
+    
     />
+
   </View>
     
   
