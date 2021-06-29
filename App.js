@@ -16,7 +16,8 @@ let myLon = 10;
 const EpCities = (props) => {
     return(
       cities.map((obj) => (
-        <Text key={obj.name}>{obj.name} - {obj.lat-myLat}/{obj.lon-myLon}</Text>
+        <Text key={obj.name}>{obj.name}{' - '}</Text>
+        
      ))
     )
 }
@@ -49,9 +50,7 @@ render(){
         style={{ width: 50, height: 50, alignSelf: 'center', marginTop: 20 }}
       />
     <FindMe  />
-    <EpCities name = {cities.name} 
-    
-    />
+  
 
   </View>
     

@@ -4,6 +4,7 @@ import { Text, View, Platform, StyleSheet } from 'react-native';
 import * as Location from 'expo-location';
 import * as appJson from './data.json';
 import { getDistance } from 'geolib';
+import { floor } from 'react-native-reanimated';
 //import * as MediaLibrary from 'expo-media-library';
 let cities = appJson.cities;
 
@@ -16,7 +17,16 @@ let longLat = [];
 cities.map(item =>(longLat.push({latitude: item.lat, longitude: item.lon})));
 
 
+const EpCities = (props) => {
+    return(
+      cities.map((obj) => (
+        <Text key={obj.name}>{obj.name}{' - '}</Text>
+        
+     ))
 
+
+    )
+}
 
 
 //console.log(cityLat, cityLong);
@@ -66,6 +76,7 @@ cities.map(item =>(longLat.push({latitude: item.lat, longitude: item.lon})));
             
         };  
 
+
     
 
 
@@ -86,12 +97,13 @@ cities.map(item =>(longLat.push({latitude: item.lat, longitude: item.lon})));
             }
             return (
                 <View>
-                  
+                    
                         <Text>My location</Text>
-  
-                       <Text>{distance}</Text> 
-                       
-                  
+                        <EpCities name = {cities.name} />
+                        {cities.map(item =>(<Text>{(item.name) + ' -'}</Text>))} 
+                        {distance.map(item=>(<Text>{(item/1000) + ' km'}</Text>))}
+
+
                 </View>
             );
         }
@@ -99,7 +111,7 @@ cities.map(item =>(longLat.push({latitude: item.lat, longitude: item.lon})));
 
    //default means that only FindMe can be exported from this module 
     export default FindMe;
-    console.log(cities);
+    console.log(cities.name);
 
     
    
